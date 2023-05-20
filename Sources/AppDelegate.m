@@ -132,12 +132,9 @@
         {
             case NSAlertFirstButtonReturn:
             {
-                NSArray *paths = NSSearchPathForDirectoriesInDomains(NSPreferencePanesDirectory, NSSystemDomainMask, YES);
-                if ([paths count] == 1)
-                {
-                    NSURL *prefPaneURL = [NSURL fileURLWithPath:[[paths objectAtIndex:0] stringByAppendingPathComponent:@"UniversalAccessPref.prefPane"]];
-                    [[NSWorkspace sharedWorkspace] openURL:prefPaneURL];
-                }
+                [[NSWorkspace sharedWorkspace] openURL:
+                    [NSURL URLWithString:
+                    @"x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility"]];
                 break;
             }
 
@@ -246,9 +243,9 @@
 
             // Ask Accessibility API for UI Element under the mouse
             // And update the display if a different UIElement
-            if (AXUIElementCopyElementAtPosition( _systemWideElement, pointAsCGPoint.x, pointAsCGPoint.y, &newElement ) == kAXErrorSuccess
-                && newElement
-                && ([self currentUIElement] == NULL || ! CFEqual( [self currentUIElement], newElement )))
+            AXError copyElementResult = AXUIElementCopyElementAtPosition( _systemWideElement, pointAsCGPoint.x, pointAsCGPoint.y, &newElement);
+            if ((copyElementResult == kAXErrorSuccess) && (newElement != NULL) &&
+                ([self currentUIElement] == NULL || ! CFEqual( [self currentUIElement], newElement )))
             {
                 [self setCurrentUIElement:newElement];
                 [self updateUIElementInfoWithAnimation:NO];
