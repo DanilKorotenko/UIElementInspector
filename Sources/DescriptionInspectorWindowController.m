@@ -55,7 +55,8 @@
 {
     NSString * description = [UIElementUtilities descriptionOfAXDescriptionOfUIElement:uiElement];
 
-    NSColor *textColor = [description isEqualToString:UIElementUtilitiesNoDescription] ? [NSColor grayColor] : [NSColor whiteColor];
+    NSColor *textColor = [description isEqualToString:UIElementUtilitiesNoDescription] ?
+        [NSColor grayColor] : [NSColor whiteColor];
     [descriptionField setTextColor:textColor];
 
     [descriptionField setStringValue:[UIElementUtilities descriptionOfAXDescriptionOfUIElement:uiElement]];

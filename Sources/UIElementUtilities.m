@@ -394,9 +394,8 @@ NSString *const UIElementUtilitiesNoDescription = @"No Description";
 
             if (AXUIElementCopyAttributeValue((AXUIElementRef)theValue, kAXRoleAttribute, &uiElementRoleRef) == kAXErrorSuccess)
             {
-                NSString *	uiElementTitle  = NULL;
-
-                uiElementTitle = [self valueOfAttribute:NSAccessibilityTitleAttribute ofUIElement:(AXUIElementRef)theValue];
+                NSString *uiElementTitle = [self valueOfAttribute:
+                    NSAccessibilityTitleAttribute ofUIElement:(AXUIElementRef)theValue];
 
                 #if 0
                 // hack to work around cocoa app objects not having titles yet
@@ -405,7 +404,7 @@ NSString *const UIElementUtilitiesNoDescription = @"No Description";
                     pid_t				theAppPID = 0;
                     ProcessSerialNumber	theAppPSN = {0,0};
                     NSString *			theAppName = NULL;
-                    
+
                     if (AXUIElementGetPid( (AXUIElementRef)theValue, &theAppPID ) == kAXErrorSuccess
                         && GetProcessForPID( theAppPID, &theAppPSN ) == noErr
                         && CopyProcessName( &theAppPSN, (CFStringRef *)&theAppName ) == noErr )
@@ -530,14 +529,11 @@ NSString *const UIElementUtilitiesNoDescription = @"No Description";
 
         for( nameIndex = 0; nameIndex < numOfNames; nameIndex++ )
         {
-            NSString *	theName 		= NULL;
-            NSString *	theDesc 		= NULL;
-
             // Grab name
-            theName = [theNames objectAtIndex:nameIndex];
+            NSString *theName = [theNames objectAtIndex:nameIndex];
 
             // Grab description
-            theDesc = [self descriptionOfAction:theName ofUIElement:element];
+            NSString *theDesc = [self descriptionOfAction:theName ofUIElement:element];
 
             // Add string
             [theDescriptionStr appendFormat:@"   %@ - %@\n", theName, theDesc];
@@ -552,7 +548,8 @@ NSString *const UIElementUtilitiesNoDescription = @"No Description";
 //
 //	Return a descripting string (role and title) of the given uiElement (AXUIElementRef).
 // -------------------------------------------------------------------------------
-+ (NSString *)descriptionForUIElement:(AXUIElementRef)uiElement attribute:(NSString *)name beingVerbose:(BOOL)beVerbose
++ (NSString *)descriptionForUIElement:(AXUIElementRef)uiElement
+    attribute:(NSString *)name beingVerbose:(BOOL)beVerbose
 {
     NSString *	theValueDescString	= NULL;
     CFTypeRef	theValue;
@@ -577,8 +574,9 @@ NSString *const UIElementUtilitiesNoDescription = @"No Description";
 // This method returns a 'no description' string by default
 + (NSString *)descriptionOfAXDescriptionOfUIElement:(AXUIElementRef)element
 {
-    id result = [self valueOfAttribute:NSAccessibilityDescriptionAttribute ofUIElement:element];
-    return (!result || [result isEqualToString:@""]) ? UIElementUtilitiesNoDescription: [result description];
+    NSString *result = (NSString *)[self valueOfAttribute:
+        NSAccessibilityDescriptionAttribute ofUIElement:element];
+    return (result.length == 0) ? UIElementUtilitiesNoDescription: [result description];
 }
 
 @end
