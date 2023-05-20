@@ -51,7 +51,6 @@
  */
 
 #import <Cocoa/Cocoa.h>
-#import <HIServices/Accessibility.h>
 
 @class InspectorWindowController, InteractionWindowController, DescriptionInspectorWindowController, HighlightWindowController;
 

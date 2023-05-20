@@ -3,12 +3,11 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 42;
+	objectVersion = 45;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		5305B7FE0B8A21D5000BC9BE /* AccessibilityInspector.icns in Resources */ = {isa = PBXBuildFile; fileRef = 5305B7FD0B8A21D5000BC9BE /* AccessibilityInspector.icns */; };
-		531161580B5EE645008CDA8F /* AppDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = F56389BC01F3B6B501CA1585 /* AppDelegate.h */; };
 		5311615E0B5EE645008CDA8F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		531161610B5EE645008CDA8F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		531161620B5EE645008CDA8F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F56389BD01F3B6B501CA1585 /* AppDelegate.m */; };
@@ -17,16 +16,11 @@
 		5381AB32119A1F0C0087326D /* InspectorWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5381AB30119A1F0C0087326D /* InspectorWindow.xib */; };
 		5381AB3C119A1FE20087326D /* InteractionWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5381AB3A119A1FE20087326D /* InteractionWindow.xib */; };
 		5381AB42119A20500087326D /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5381AB40119A20500087326D /* MainMenu.xib */; };
-		5381AB54119A23250087326D /* InteractionWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = 5381AB52119A23250087326D /* InteractionWindowController.h */; };
 		5381AB55119A23250087326D /* InteractionWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5381AB53119A23250087326D /* InteractionWindowController.m */; };
-		5381AB5A119A23490087326D /* InspectorWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = 5381AB58119A23490087326D /* InspectorWindowController.h */; };
 		5381AB5B119A23490087326D /* InspectorWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5381AB59119A23490087326D /* InspectorWindowController.m */; };
-		5381ACE7119A48330087326D /* UIElementUtilities.h in Headers */ = {isa = PBXBuildFile; fileRef = 5381ACE5119A48330087326D /* UIElementUtilities.h */; };
 		5381ACE8119A48330087326D /* UIElementUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 5381ACE6119A48330087326D /* UIElementUtilities.m */; };
-		5381ADD4119B53C30087326D /* DescriptionInspectorWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = 5381ADD2119B53C30087326D /* DescriptionInspectorWindowController.h */; };
 		5381ADD5119B53C30087326D /* DescriptionInspectorWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5381ADD3119B53C30087326D /* DescriptionInspectorWindowController.m */; };
 		5381ADDB119B54D20087326D /* DescriptionInspectorWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5381ADDA119B54D20087326D /* DescriptionInspectorWindow.xib */; };
-		5381AFCA119B89830087326D /* HighlightWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = 5381AFC8119B89830087326D /* HighlightWindowController.h */; };
 		5381AFCB119B89830087326D /* HighlightWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5381AFC9119B89830087326D /* HighlightWindowController.m */; };
 /* End PBXBuildFile section */
 
@@ -161,28 +155,11 @@
 		};
 /* End PBXGroup section */
 
-/* Begin PBXHeadersBuildPhase section */
-		531161570B5EE645008CDA8F /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				531161580B5EE645008CDA8F /* AppDelegate.h in Headers */,
-				5381AB54119A23250087326D /* InteractionWindowController.h in Headers */,
-				5381AB5A119A23490087326D /* InspectorWindowController.h in Headers */,
-				5381ACE7119A48330087326D /* UIElementUtilities.h in Headers */,
-				5381ADD4119B53C30087326D /* DescriptionInspectorWindowController.h in Headers */,
-				5381AFCA119B89830087326D /* HighlightWindowController.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXHeadersBuildPhase section */
-
 /* Begin PBXNativeTarget section */
 		531161560B5EE645008CDA8F /* UIElementInspector */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 531161690B5EE645008CDA8F /* Build configuration list for PBXNativeTarget "UIElementInspector" */;
 			buildPhases = (
-				531161570B5EE645008CDA8F /* Headers */,
 				5311615C0B5EE645008CDA8F /* Resources */,
 				531161600B5EE645008CDA8F /* Sources */,
 				531161660B5EE645008CDA8F /* Frameworks */,
@@ -202,9 +179,17 @@
 /* Begin PBXProject section */
 		29B97313FDCFA39411CA2CEA /* Project object */ = {
 			isa = PBXProject;
+			attributes = {
+			};
 			buildConfigurationList = 53B057F20B5EE5E2000896CD /* Build configuration list for PBXProject "UIElementInspector" */;
-			compatibilityVersion = "Xcode 2.4";
+			compatibilityVersion = "Xcode 3.1";
+			developmentRegion = en;
 			hasScannedForEncodings = 1;
+			knownRegions = (
+				en,
+				Base,
+				English,
+			);
 			mainGroup = 29B97314FDCFA39411CA2CEA /* AccessibilityTesting */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -295,20 +280,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COPY_PHASE_STRIP = NO;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SYSTEM_LIBRARY_DIR)/Frameworks/ApplicationServices.framework/Versions/A/Frameworks",
-					"$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks/",
-				);
-				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = "Info-UIElementInspector.plist";
-				INSTALL_PATH = "$(SYSTEM_DEVELOPER_UTILITIES_DIR)/Accessibility Tools/";
-				LIBRARY_SEARCH_PATHS = "";
-				OTHER_CFLAGS = "";
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = UIElementInspector;
 				SECTORDER_FLAGS = "";
@@ -326,17 +301,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COPY_PHASE_STRIP = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SYSTEM_LIBRARY_DIR)/Frameworks/ApplicationServices.framework/Versions/A/Frameworks",
-					"$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks/",
-				);
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = "Info-UIElementInspector.plist";
-				INSTALL_PATH = "$(SYSTEM_DEVELOPER_UTILITIES_DIR)/Accessibility Tools/";
-				LIBRARY_SEARCH_PATHS = "";
-				OTHER_CFLAGS = "";
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = UIElementInspector;
 				SECTORDER_FLAGS = "";
@@ -353,19 +320,12 @@
 		53B057F30B5EE5E2000896CD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT_PRE_XCODE_3_1)";
-				ARCHS_STANDARD_32_64_BIT_PRE_XCODE_3_1 = "x86_64 i386 ppc";
-				ONLY_ACTIVE_ARCH = NO;
-				SDKROOT = "$(DEVELOPER_SDK_DIR)/MacOSX10.6.sdk";
 			};
 			name = Debug;
 		};
 		53B057F40B5EE5E2000896CD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT_PRE_XCODE_3_1)";
-				ARCHS_STANDARD_32_64_BIT_PRE_XCODE_3_1 = "x86_64 i386 ppc";
-				SDKROOT = "$(DEVELOPER_SDK_DIR)/MacOSX10.6.sdk";
 			};
 			name = Release;
 		};
