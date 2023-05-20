@@ -22,6 +22,7 @@
 		5381ADD5119B53C30087326D /* DescriptionInspectorWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5381ADD3119B53C30087326D /* DescriptionInspectorWindowController.m */; };
 		5381ADDB119B54D20087326D /* DescriptionInspectorWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5381ADDA119B54D20087326D /* DescriptionInspectorWindow.xib */; };
 		5381AFCB119B89830087326D /* HighlightWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5381AFC9119B89830087326D /* HighlightWindowController.m */; };
+		DAD8386E2A190DC500BE05E3 /* HotKeyController.m in Sources */ = {isa = PBXBuildFile; fileRef = DAD8386D2A190DC500BE05E3 /* HotKeyController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -47,6 +48,8 @@
 		DAD838672A18DB4F00BE05E3 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/InspectorWindow.xib; sourceTree = "<group>"; };
 		DAD838682A18DB4F00BE05E3 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/InteractionWindow.xib; sourceTree = "<group>"; };
 		DAD838692A18DB4F00BE05E3 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		DAD8386C2A190DC500BE05E3 /* HotKeyController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HotKeyController.h; sourceTree = "<group>"; };
+		DAD8386D2A190DC500BE05E3 /* HotKeyController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HotKeyController.m; sourceTree = "<group>"; };
 		F56389BC01F3B6B501CA1585 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		F56389BD01F3B6B501CA1585 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		F5656FB80209D1C201CA1586 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
@@ -94,8 +97,8 @@
 		29B97314FDCFA39411CA2CEA /* AccessibilityTesting */ = {
 			isa = PBXGroup;
 			children = (
-				DAD8386B2A190AE700BE05E3 /* Resources */,
 				DAD8386A2A190A3200BE05E3 /* Sources */,
+				DAD8386B2A190AE700BE05E3 /* Resources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
 				5311616D0B5EE645008CDA8F /* Info-UIElementInspector.plist */,
@@ -121,13 +124,15 @@
 				5381ADD3119B53C30087326D /* DescriptionInspectorWindowController.m */,
 				5381AFC8119B89830087326D /* HighlightWindowController.h */,
 				5381AFC9119B89830087326D /* HighlightWindowController.m */,
+				DAD8386C2A190DC500BE05E3 /* HotKeyController.h */,
+				DAD8386D2A190DC500BE05E3 /* HotKeyController.m */,
 				5381AB58119A23490087326D /* InspectorWindowController.h */,
 				5381AB59119A23490087326D /* InspectorWindowController.m */,
 				5381AB52119A23250087326D /* InteractionWindowController.h */,
 				5381AB53119A23250087326D /* InteractionWindowController.m */,
+				29B97316FDCFA39411CA2CEA /* main.m */,
 				5381ACE5119A48330087326D /* UIElementUtilities.h */,
 				5381ACE6119A48330087326D /* UIElementUtilities.m */,
-				29B97316FDCFA39411CA2CEA /* main.m */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -218,6 +223,7 @@
 				5381AB55119A23250087326D /* InteractionWindowController.m in Sources */,
 				5381AB5B119A23490087326D /* InspectorWindowController.m in Sources */,
 				5381ACE8119A48330087326D /* UIElementUtilities.m in Sources */,
+				DAD8386E2A190DC500BE05E3 /* HotKeyController.m in Sources */,
 				5381ADD5119B53C30087326D /* DescriptionInspectorWindowController.m in Sources */,
 				5381AFCB119B89830087326D /* HighlightWindowController.m in Sources */,
 			);

@@ -69,6 +69,8 @@
     BOOL				                    _highlightLockedUIElement;
 }
 
+- (BOOL)isInteractionWindowVisible;
+
 - (void)setCurrentUIElement:(AXUIElementRef)uiElement;
 - (AXUIElementRef)currentUIElement;
 
