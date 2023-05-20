@@ -283,6 +283,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = "Info-UIElementInspector.plist";
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				PRODUCT_BUNDLE_IDENTIFIER = com.apple.sample.UIElementInspector;
 				PRODUCT_NAME = UIElementInspector;
 				WARNING_CFLAGS = (
 					"-Wmost",
@@ -301,6 +302,7 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				INFOPLIST_FILE = "Info-UIElementInspector.plist";
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				PRODUCT_BUNDLE_IDENTIFIER = com.apple.sample.UIElementInspector;
 				PRODUCT_NAME = UIElementInspector;
 				WARNING_CFLAGS = (
 					"-Wmost",
