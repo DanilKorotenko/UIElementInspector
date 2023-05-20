@@ -51,19 +51,21 @@
 
 @implementation DescriptionInspectorWindowController
 
-- (void)updateInfoForUIElement:(AXUIElementRef)uiElement {
+- (void)updateInfoForUIElement:(AXUIElementRef)uiElement
+{
     NSString * description = [UIElementUtilities descriptionOfAXDescriptionOfUIElement:uiElement];
-    
+
     NSColor *textColor = [description isEqualToString:UIElementUtilitiesNoDescription] ? [NSColor grayColor] : [NSColor whiteColor];
     [descriptionField setTextColor:textColor];
-    
+
     [descriptionField setStringValue:[UIElementUtilities descriptionOfAXDescriptionOfUIElement:uiElement]];
 }
 
 /* Since all of our windows are NSPanels, we can't use the regular 'app should terminated when all windows are closed' delegate, since it will ask the delegate if all that is left onscreen are NSPanels.  So, let the window close, then terminate.
 Probably should move this up to the App controller, and register for the notification there.
 */
-- (void)windowWillClose:(NSNotification *)note {
+- (void)windowWillClose:(NSNotification *)note
+{
     [NSApp performSelector:@selector(terminate:) withObject:nil afterDelay:0];
 }
 

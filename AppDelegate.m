@@ -95,22 +95,21 @@ OSStatus LockUIElementHotKeyHandler(EventHandlerCallRef nextHandler,EventRef the
 //	Encapsulate registering a hot key in one location
 //	and we should go ahead and lock/unlock the current UIElement as needed
 // -------------------------------------------------------------------------------
-static OSStatus RegisterLockUIElementHotKey(void *userInfo) {
-
+static OSStatus RegisterLockUIElementHotKey(void *userInfo)
+{
     EventTypeSpec eventType = { kEventClassKeyboard, kEventHotKeyReleased };
     InstallApplicationEventHandler(NewEventHandlerUPP(LockUIElementHotKeyHandler), 1, &eventType,(void *)userInfo, NULL);
-    
+
     EventHotKeyID hotKeyID = { 'lUIk', 1 }; // we make up the ID
     return RegisterEventHotKey(kVK_F7, cmdKey, hotKeyID, GetApplicationEventTarget(), 0, &gMyHotKeyRef); // Cmd-F7 will be the key to hit
-
 }
 
 #pragma mark -
 
-
 @implementation AppDelegate
 
-- (void)dealloc {
+- (void)dealloc
+{
     [_inspectorWindowController release];
     [_interactionWindowController release];
     [_descriptionInspectorWindowController release];
@@ -120,56 +119,62 @@ static OSStatus RegisterLockUIElementHotKey(void *userInfo) {
     [super dealloc];
 }
 
-- (HighlightWindowController *)highlightWindowController {
-    if (!_highlightWindowController) {
-	_highlightWindowController = [[HighlightWindowController alloc] initHighlightWindowController];
+- (HighlightWindowController *)highlightWindowController
+{
+    if (!_highlightWindowController)
+    {
+        _highlightWindowController = [[HighlightWindowController alloc] initHighlightWindowController];
     }
     return _highlightWindowController;
 }
 
-- (void)applicationDidFinishLaunching:(NSNotification *)note {
-
-    // We first have to check if the Accessibility APIs are turned on.  If not, we have to tell the user to do it (they'll need to authenticate to do it).  If you are an accessibility app (i.e., if you are getting info about UI elements in other apps), the APIs won't work unless the APIs are turned on.	
+- (void)applicationDidFinishLaunching:(NSNotification *)note
+{
+    // We first have to check if the Accessibility APIs are turned on.  If not, we have to tell the user to do it (they'll need to authenticate to do it).  If you are an accessibility app (i.e., if you are getting info about UI elements in other apps), the APIs won't work unless the APIs are turned on.
     if (!AXAPIEnabled())
     {
-    
-	NSAlert *alert = [[[NSAlert alloc] init] autorelease];
-	
-	[alert setAlertStyle:NSWarningAlertStyle];
-	[alert setMessageText:@"UI Element Inspector requires that the Accessibility API be enabled."];
-	[alert setInformativeText:@"Would you like to launch System Preferences so that you can turn on \"Enable access for assistive devices\"?"];
-	[alert addButtonWithTitle:@"Open System Preferences"];
-	[alert addButtonWithTitle:@"Continue Anyway"];
-	[alert addButtonWithTitle:@"Quit UI Element Inspector"];
-	
-	NSInteger alertResult = [alert runModal];
-	        
-        switch (alertResult) {
-            case NSAlertFirstButtonReturn: {
-		NSArray *paths = NSSearchPathForDirectoriesInDomains(NSPreferencePanesDirectory, NSSystemDomainMask, YES);
-		if ([paths count] == 1) {
-		    NSURL *prefPaneURL = [NSURL fileURLWithPath:[[paths objectAtIndex:0] stringByAppendingPathComponent:@"UniversalAccessPref.prefPane"]];
-		    [[NSWorkspace sharedWorkspace] openURL:prefPaneURL];
-		}		
-	    }
-		break;
-                
-            case NSAlertSecondButtonReturn: // just continue
-            default:
+        NSAlert *alert = [[[NSAlert alloc] init] autorelease];
+
+        [alert setAlertStyle:NSWarningAlertStyle];
+        [alert setMessageText:@"UI Element Inspector requires that the Accessibility API be enabled."];
+        [alert setInformativeText:@"Would you like to launch System Preferences so that you can turn on \"Enable access for assistive devices\"?"];
+        [alert addButtonWithTitle:@"Open System Preferences"];
+        [alert addButtonWithTitle:@"Continue Anyway"];
+        [alert addButtonWithTitle:@"Quit UI Element Inspector"];
+
+        NSInteger alertResult = [alert runModal];
+
+        switch (alertResult)
+        {
+            case NSAlertFirstButtonReturn:
+            {
+                NSArray *paths = NSSearchPathForDirectoriesInDomains(NSPreferencePanesDirectory, NSSystemDomainMask, YES);
+                if ([paths count] == 1)
+                {
+                    NSURL *prefPaneURL = [NSURL fileURLWithPath:[[paths objectAtIndex:0] stringByAppendingPathComponent:@"UniversalAccessPref.prefPane"]];
+                    [[NSWorkspace sharedWorkspace] openURL:prefPaneURL];
+                }
                 break;
-		
+            }
+
             case NSAlertThirdButtonReturn:
+            {
                 [NSApp terminate:self];
                 return;
                 break;
+            }
+
+            case NSAlertSecondButtonReturn: // just continue
+            default:
+                break;
         }
     }
-    
+
     _systemWideElement = AXUIElementCreateSystemWide();
-    
+
     // Pass self in for userInfo, gives us a pointer to ourselves in handler function
     RegisterLockUIElementHotKey((void *)self);
-    
+
 #if USE_DESCRIPTION_INSPECTOR
     _descriptionInspectorWindowController = [[DescriptionInspectorWindowController alloc] initWithWindowNibName:@"DescriptionInspectorWindow"];
     [_descriptionInspectorWindowController setWindowFrameAutosaveName:@"DescriptionInspectorWindow"];
@@ -180,12 +185,10 @@ static OSStatus RegisterLockUIElementHotKey(void *userInfo) {
     [_inspectorWindowController showWindow:nil];
 #endif
 
-    
     _interactionWindowController = [[InteractionWindowController alloc] initWithWindowNibName:@"InteractionWindow"];
     [_interactionWindowController setWindowFrameAutosaveName:@"InteractionWindow"];
-    
-    [self performTimerBasedUpdate];
 
+    [self performTimerBasedUpdate];
 }
 
 #pragma mark -
@@ -207,7 +210,6 @@ static OSStatus RegisterLockUIElementHotKey(void *userInfo) {
     return _currentUIElement;
 }
 
-
 #pragma mark -
 
 // -------------------------------------------------------------------------------
@@ -218,39 +220,42 @@ static OSStatus RegisterLockUIElementHotKey(void *userInfo) {
 - (void)performTimerBasedUpdate
 {
     [self updateCurrentUIElement];
-    
+
     [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(performTimerBasedUpdate) userInfo:nil repeats:NO];
 }
 
-
-- (void)updateUIElementInfoWithAnimation:(BOOL)flag {
+- (void)updateUIElementInfoWithAnimation:(BOOL)flag
+{
     AXUIElementRef element = [self currentUIElement];
-    if (_currentlyInteracting) [_interactionWindowController interactWithUIElement:element];
+    if (_currentlyInteracting)
+    {
+        [_interactionWindowController interactWithUIElement:element];
+    }
     [_inspectorWindowController updateInfoForUIElement:element];
     [_descriptionInspectorWindowController updateInfoForUIElement:element];
     [[self highlightWindowController] setHighlightFrame:[UIElementUtilities frameOfUIElement:element] animate:flag];
 }
-
 
 // -------------------------------------------------------------------------------
 //	updateCurrentUIElement:
 // -------------------------------------------------------------------------------
 - (void)updateCurrentUIElement
 {
-    if (![self isInteractionWindowVisible]) {
-    
+    if (![self isInteractionWindowVisible])
+    {
         // The current mouse position with origin at top right.
-	NSPoint cocoaPoint = [NSEvent mouseLocation];
-	        
-        // Only ask for the UIElement under the mouse if has moved since the last check.
-        if (!NSEqualPoints(cocoaPoint, _lastMousePoint)) {
+        NSPoint cocoaPoint = [NSEvent mouseLocation];
 
-	    CGPoint pointAsCGPoint = [UIElementUtilities carbonScreenPointFromCocoaScreenPoint:cocoaPoint];
+        // Only ask for the UIElement under the mouse if has moved since the last check.
+        if (!NSEqualPoints(cocoaPoint, _lastMousePoint))
+        {
+            CGPoint pointAsCGPoint = [UIElementUtilities carbonScreenPointFromCocoaScreenPoint:cocoaPoint];
 
             AXUIElementRef newElement = NULL;
-	    
-	    /* If the interaction window is not visible, but we still think we are interacting, change that */
-            if (_currentlyInteracting) {
+
+            /* If the interaction window is not visible, but we still think we are interacting, change that */
+            if (_currentlyInteracting)
+            {
                 _currentlyInteracting = ! _currentlyInteracting;
                 [_inspectorWindowController indicateUIElementIsLocked:_currentlyInteracting];
             }
@@ -259,13 +264,12 @@ static OSStatus RegisterLockUIElementHotKey(void *userInfo) {
             // And update the display if a different UIElement
             if (AXUIElementCopyElementAtPosition( _systemWideElement, pointAsCGPoint.x, pointAsCGPoint.y, &newElement ) == kAXErrorSuccess
                 && newElement
-                && ([self currentUIElement] == NULL || ! CFEqual( [self currentUIElement], newElement ))) {
-                    
+                && ([self currentUIElement] == NULL || ! CFEqual( [self currentUIElement], newElement )))
+            {
                 [self setCurrentUIElement:newElement];
-		[self updateUIElementInfoWithAnimation:NO];
-
+                [self updateUIElementInfoWithAnimation:NO];
             }
-            
+
             _lastMousePoint = cocoaPoint;
         }
     }
@@ -293,9 +297,10 @@ static OSStatus RegisterLockUIElementHotKey(void *userInfo) {
     _currentlyInteracting = YES;
     [_inspectorWindowController indicateUIElementIsLocked:YES];
     [_interactionWindowController interactWithUIElement:[self currentUIElement]];
-    if (_highlightLockedUIElement) {
-	[[self highlightWindowController] setHighlightFrame:[UIElementUtilities frameOfUIElement:[self currentUIElement]] animate:NO];
-	[[self highlightWindowController] showWindow:nil];
+    if (_highlightLockedUIElement)
+    {
+        [[self highlightWindowController] setHighlightFrame:[UIElementUtilities frameOfUIElement:[self currentUIElement]] animate:NO];
+        [[self highlightWindowController] showWindow:nil];
     }
 }
 
@@ -319,12 +324,13 @@ static OSStatus RegisterLockUIElementHotKey(void *userInfo) {
 // -------------------------------------------------------------------------------
 - (void)navigateToUIElement:(id)sender
 {
-    if (_currentlyInteracting) {
-	AXUIElementRef element = (AXUIElementRef)[sender representedObject];
-	BOOL flag = ![UIElementUtilities isApplicationUIElement:element];
-	flag = flag && ![UIElementUtilities isApplicationUIElement:[self currentUIElement]];
-	[self setCurrentUIElement:element];
-	[self updateUIElementInfoWithAnimation:flag];
+    if (_currentlyInteracting)
+    {
+        AXUIElementRef element = (AXUIElementRef)[sender representedObject];
+        BOOL flag = ![UIElementUtilities isApplicationUIElement:element];
+        flag = flag && ![UIElementUtilities isApplicationUIElement:[self currentUIElement]];
+        [self setCurrentUIElement:element];
+        [self updateUIElementInfoWithAnimation:flag];
     }
 }
 
@@ -333,11 +339,11 @@ static OSStatus RegisterLockUIElementHotKey(void *userInfo) {
 // -------------------------------------------------------------------------------
 - (void)refreshInteractionUIElement:(id)sender
 {
-    if (_currentlyInteracting) {
-	[self updateUIElementInfoWithAnimation:YES];
+    if (_currentlyInteracting)
+    {
+        [self updateUIElementInfoWithAnimation:YES];
     }
 }
-
 
 #pragma mark -
 
@@ -345,17 +351,20 @@ static OSStatus RegisterLockUIElementHotKey(void *userInfo) {
 //	toggleHighlightWindow:(id)sender
 // -------------------------------------------------------------------------------
 - (void)toggleHighlightWindow:(id)sender
-    {
+{
     _highlightLockedUIElement = !_highlightLockedUIElement;
-    if (_currentlyInteracting) {
-	if (_highlightLockedUIElement) {
-	    [[self highlightWindowController] setHighlightFrame:[UIElementUtilities frameOfUIElement:[self currentUIElement]] animate:NO];
-	    [[self highlightWindowController] showWindow:nil];
-	} else {
-	    [[[self highlightWindowController] window] orderOut:nil];
-	}
+    if (_currentlyInteracting)
+    {
+        if (_highlightLockedUIElement)
+        {
+            [[self highlightWindowController] setHighlightFrame:[UIElementUtilities frameOfUIElement:[self currentUIElement]] animate:NO];
+            [[self highlightWindowController] showWindow:nil];
+        }
+        else
+        {
+            [[[self highlightWindowController] window] orderOut:nil];
+        }
     }
 }
 
 @end
-

@@ -49,10 +49,9 @@
 #import <Cocoa/Cocoa.h>
 
 
-@interface DescriptionInspectorWindowController : NSWindowController {
-
+@interface DescriptionInspectorWindowController : NSWindowController
+{
     IBOutlet NSTextField *descriptionField;
-
 }
 
 - (void)updateInfoForUIElement:(AXUIElementRef)uiElement;

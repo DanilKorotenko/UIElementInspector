@@ -50,10 +50,10 @@
 
 @implementation HighlightWindowController
 
-- (id)initHighlightWindowController {
-
+- (id)initHighlightWindowController
+{
     NSRect bounds = NSMakeRect(0.0, 0.0, 100.0, 100.0);
-    
+
     NSWindow *window = [[NSWindow alloc] initWithContentRect:bounds styleMask:NSBorderlessWindowMask backing:NSBackingStoreBuffered defer:YES];
     [window setOpaque:NO];
     [window setAlphaValue:0.20];
@@ -62,9 +62,10 @@
     [window setIgnoresMouseEvents:YES];
 
     self = [super initWithWindow:window];
-    
-    if (self) {
-	[window setDelegate:self];
+
+    if (self)
+    {
+        [window setDelegate:self];
     }
 
     [window release];
@@ -72,8 +73,12 @@
     return self;
 }
 
-- (void)setHighlightFrame:(NSRect)frame animate:(BOOL)flag {
-    if (flag) [[NSAnimationContext currentContext] setDuration:0.1];
+- (void)setHighlightFrame:(NSRect)frame animate:(BOOL)flag
+{
+    if (flag)
+    {
+        [[NSAnimationContext currentContext] setDuration:0.1];
+    }
     id target = flag ? [[self window] animator] : [self window];
     [target setFrame:frame display:NO];
 }

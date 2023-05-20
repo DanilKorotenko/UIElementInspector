@@ -49,15 +49,14 @@
 #import <Cocoa/Cocoa.h>
 
 
-@interface InteractionWindowController : NSWindowController {
-
+@interface InteractionWindowController : NSWindowController
+{
     IBOutlet NSPopUpButton *	_actionsPopup;
     IBOutlet NSPopUpButton *	_attributesPopup;
     IBOutlet NSPopUpButton *	_elementsPopup;
     IBOutlet NSTextField *	_attributeValueTextField;
     IBOutlet NSButton *		_setAttributeButton;
     IBOutlet NSButton *		_performActionButton;
-    
 }
 
 - (void)interactWithUIElement:(AXUIElementRef)element;

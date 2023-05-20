@@ -48,7 +48,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface HighlightWindowController : NSWindowController <NSWindowDelegate> {}
+@interface HighlightWindowController : NSWindowController <NSWindowDelegate>
 
 - (id)initHighlightWindowController;
 

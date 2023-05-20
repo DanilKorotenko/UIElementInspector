@@ -50,7 +50,7 @@
 
 extern NSString *const UIElementUtilitiesNoDescription;
 
-@interface UIElementUtilities : NSObject {}
+@interface UIElementUtilities : NSObject
 
 #pragma mark -
 #pragma mark AXUIElementRef cover methods
@@ -95,7 +95,6 @@ extern NSString *const UIElementUtilitiesNoDescription;
 /* Methods to return the various strings displayed in the interface */
 + (NSString *)stringDescriptionOfUIElement:(AXUIElementRef)inElement; // Note this is NOT nec. the AXDescription of the UIElement
 + (NSString *)descriptionForUIElement:(AXUIElementRef)uiElement attribute:(NSString *)name beingVerbose:(BOOL)beVerbose;
-
 
 + (NSString *)descriptionOfAXDescriptionOfUIElement:(AXUIElementRef)element;
 

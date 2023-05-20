@@ -48,7 +48,8 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface InspectorWindowController : NSWindowController {
+@interface InspectorWindowController : NSWindowController
+{
     IBOutlet NSTextView* _consoleView;
 }
 
