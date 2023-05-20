@@ -71,7 +71,7 @@
 
 #pragma mark Hot Key Registration And Handler
 
-EventHotKeyRef	gMyHotKeyRef;
+EventHotKeyRef gMyHotKeyRef = NULL;
 
 // -------------------------------------------------------------------------------
 //	LockUIElementHotKeyHandler:

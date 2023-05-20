@@ -65,25 +65,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		080E96DDFE201D6D7F000001 /* Classes */ = {
-			isa = PBXGroup;
-			children = (
-				F56389BC01F3B6B501CA1585 /* AppDelegate.h */,
-				F56389BD01F3B6B501CA1585 /* AppDelegate.m */,
-				5381AB52119A23250087326D /* InteractionWindowController.h */,
-				5381AB53119A23250087326D /* InteractionWindowController.m */,
-				5381AB58119A23490087326D /* InspectorWindowController.h */,
-				5381AB59119A23490087326D /* InspectorWindowController.m */,
-				5381AFC8119B89830087326D /* HighlightWindowController.h */,
-				5381AFC9119B89830087326D /* HighlightWindowController.m */,
-				5381ADD2119B53C30087326D /* DescriptionInspectorWindowController.h */,
-				5381ADD3119B53C30087326D /* DescriptionInspectorWindowController.m */,
-				5381ACE5119A48330087326D /* UIElementUtilities.h */,
-				5381ACE6119A48330087326D /* UIElementUtilities.m */,
-			);
-			name = Classes;
-			sourceTree = "<group>";
-		};
 		1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -113,35 +94,13 @@
 		29B97314FDCFA39411CA2CEA /* AccessibilityTesting */ = {
 			isa = PBXGroup;
 			children = (
-				080E96DDFE201D6D7F000001 /* Classes */,
-				29B97315FDCFA39411CA2CEA /* Other Sources */,
-				29B97317FDCFA39411CA2CEA /* Resources */,
+				DAD8386B2A190AE700BE05E3 /* Resources */,
+				DAD8386A2A190A3200BE05E3 /* Sources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
 				5311616D0B5EE645008CDA8F /* Info-UIElementInspector.plist */,
 			);
 			name = AccessibilityTesting;
-			sourceTree = "<group>";
-		};
-		29B97315FDCFA39411CA2CEA /* Other Sources */ = {
-			isa = PBXGroup;
-			children = (
-				29B97316FDCFA39411CA2CEA /* main.m */,
-			);
-			name = "Other Sources";
-			sourceTree = "<group>";
-		};
-		29B97317FDCFA39411CA2CEA /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				5381AB40119A20500087326D /* MainMenu.xib */,
-				5381AB30119A1F0C0087326D /* InspectorWindow.xib */,
-				5381AB3A119A1FE20087326D /* InteractionWindow.xib */,
-				5381ADDA119B54D20087326D /* DescriptionInspectorWindow.xib */,
-				5305B7FD0B8A21D5000BC9BE /* AccessibilityInspector.icns */,
-				089C165CFE840E0CC02AAC07 /* InfoPlist.strings */,
-			);
-			name = Resources;
 			sourceTree = "<group>";
 		};
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
@@ -151,6 +110,39 @@
 				1058C7A2FEA54F0111CA2CBB /* Other Frameworks */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		DAD8386A2A190A3200BE05E3 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				F56389BC01F3B6B501CA1585 /* AppDelegate.h */,
+				F56389BD01F3B6B501CA1585 /* AppDelegate.m */,
+				5381ADD2119B53C30087326D /* DescriptionInspectorWindowController.h */,
+				5381ADD3119B53C30087326D /* DescriptionInspectorWindowController.m */,
+				5381AFC8119B89830087326D /* HighlightWindowController.h */,
+				5381AFC9119B89830087326D /* HighlightWindowController.m */,
+				5381AB58119A23490087326D /* InspectorWindowController.h */,
+				5381AB59119A23490087326D /* InspectorWindowController.m */,
+				5381AB52119A23250087326D /* InteractionWindowController.h */,
+				5381AB53119A23250087326D /* InteractionWindowController.m */,
+				5381ACE5119A48330087326D /* UIElementUtilities.h */,
+				5381ACE6119A48330087326D /* UIElementUtilities.m */,
+				29B97316FDCFA39411CA2CEA /* main.m */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		DAD8386B2A190AE700BE05E3 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				089C165CFE840E0CC02AAC07 /* InfoPlist.strings */,
+				5305B7FD0B8A21D5000BC9BE /* AccessibilityInspector.icns */,
+				5381ADDA119B54D20087326D /* DescriptionInspectorWindow.xib */,
+				5381AB3A119A1FE20087326D /* InteractionWindow.xib */,
+				5381AB30119A1F0C0087326D /* InspectorWindow.xib */,
+				5381AB40119A20500087326D /* MainMenu.xib */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
