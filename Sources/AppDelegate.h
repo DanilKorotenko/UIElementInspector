@@ -55,19 +55,6 @@
 @class InspectorWindowController, InteractionWindowController, DescriptionInspectorWindowController, HighlightWindowController;
 
 @interface AppDelegate : NSObject
-{
-    InspectorWindowController		        *_inspectorWindowController;
-    DescriptionInspectorWindowController    *_descriptionInspectorWindowController;
-    InteractionWindowController		        *_interactionWindowController;
-    HighlightWindowController		        *_highlightWindowController;
-
-    AXUIElementRef			                _systemWideElement;
-    NSPoint				                    _lastMousePoint;
-
-    AXUIElementRef			                _currentUIElement;
-    BOOL				                    _currentlyInteracting;
-    BOOL				                    _highlightLockedUIElement;
-}
 
 - (BOOL)isInteractionWindowVisible;
 

@@ -66,7 +66,28 @@
 */
 #define USE_DESCRIPTION_INSPECTOR 0
 
+@interface AppDelegate ()
+
+@property (readonly) HighlightWindowController *highlightWindowController;
+
+@property (readwrite) NSPoint lastMousePoint;
+
+@property (readwrite) BOOL currentlyInteracting;
+@property (readwrite) BOOL highlightLockedUIElement;
+
+@end
+
 @implementation AppDelegate
+{
+    InspectorWindowController                *_inspectorWindowController;
+    DescriptionInspectorWindowController    *_descriptionInspectorWindowController;
+    InteractionWindowController                *_interactionWindowController;
+
+    AXUIElementRef                            _systemWideElement;
+    AXUIElementRef                            _currentUIElement;
+}
+
+@synthesize highlightWindowController;
 
 - (void)dealloc
 {
@@ -83,11 +104,11 @@
 
 - (HighlightWindowController *)highlightWindowController
 {
-    if (!_highlightWindowController)
+    if (!highlightWindowController)
     {
-        _highlightWindowController = [[HighlightWindowController alloc] initHighlightWindowController];
+        highlightWindowController = [[HighlightWindowController alloc] initHighlightWindowController];
     }
-    return _highlightWindowController;
+    return highlightWindowController;
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)note
@@ -188,7 +209,8 @@
 - (void)updateUIElementInfoWithAnimation:(BOOL)flag
 {
     AXUIElementRef element = [self currentUIElement];
-    if (_currentlyInteracting)
+
+    if (self.currentlyInteracting)
     {
         [_interactionWindowController interactWithUIElement:element];
     }
@@ -208,17 +230,17 @@
         NSPoint cocoaPoint = [NSEvent mouseLocation];
 
         // Only ask for the UIElement under the mouse if has moved since the last check.
-        if (!NSEqualPoints(cocoaPoint, _lastMousePoint))
+        if (!NSEqualPoints(cocoaPoint, self.lastMousePoint))
         {
             CGPoint pointAsCGPoint = [UIElementUtilities carbonScreenPointFromCocoaScreenPoint:cocoaPoint];
 
             AXUIElementRef newElement = NULL;
 
             /* If the interaction window is not visible, but we still think we are interacting, change that */
-            if (_currentlyInteracting)
+            if (self.currentlyInteracting)
             {
-                _currentlyInteracting = ! _currentlyInteracting;
-                [_inspectorWindowController indicateUIElementIsLocked:_currentlyInteracting];
+                self.currentlyInteracting = ! self.currentlyInteracting;
+                [_inspectorWindowController indicateUIElementIsLocked:self.currentlyInteracting];
             }
 
             // Ask Accessibility API for UI Element under the mouse
@@ -231,7 +253,7 @@
                 [self updateUIElementInfoWithAnimation:NO];
             }
 
-            _lastMousePoint = cocoaPoint;
+            self.lastMousePoint = cocoaPoint;
         }
     }
 }
@@ -255,10 +277,10 @@
 // -------------------------------------------------------------------------------
 - (IBAction)lockCurrentUIElement:(id)sender
 {
-    _currentlyInteracting = YES;
+    self.currentlyInteracting = YES;
     [_inspectorWindowController indicateUIElementIsLocked:YES];
     [_interactionWindowController interactWithUIElement:[self currentUIElement]];
-    if (_highlightLockedUIElement)
+    if (self.highlightLockedUIElement)
     {
         [[self highlightWindowController] setHighlightFrame:[UIElementUtilities frameOfUIElement:[self currentUIElement]] animate:NO];
         [[self highlightWindowController] showWindow:nil];
@@ -270,11 +292,10 @@
 // -------------------------------------------------------------------------------
 - (void)unlockCurrentUIElement:(id)sender
 {
-    _currentlyInteracting = NO;
+    self.currentlyInteracting = NO;
     [_inspectorWindowController indicateUIElementIsLocked:NO];
     [_interactionWindowController close];
-    [[self highlightWindowController] close];
-    _highlightWindowController = nil;
+    [self.highlightWindowController close];
 }
 
 #pragma mark -
@@ -284,7 +305,7 @@
 // -------------------------------------------------------------------------------
 - (void)navigateToUIElement:(id)sender
 {
-    if (_currentlyInteracting)
+    if (self.currentlyInteracting)
     {
         AXUIElementRef element = (__bridge AXUIElementRef)[sender representedObject];
         BOOL flag = ![UIElementUtilities isApplicationUIElement:element];
@@ -299,7 +320,7 @@
 // -------------------------------------------------------------------------------
 - (void)refreshInteractionUIElement:(id)sender
 {
-    if (_currentlyInteracting)
+    if (self.currentlyInteracting)
     {
         [self updateUIElementInfoWithAnimation:YES];
     }
@@ -312,17 +333,18 @@
 // -------------------------------------------------------------------------------
 - (void)toggleHighlightWindow:(id)sender
 {
-    _highlightLockedUIElement = !_highlightLockedUIElement;
-    if (_currentlyInteracting)
+    self.highlightLockedUIElement = !self.highlightLockedUIElement;
+    if (self.currentlyInteracting)
     {
-        if (_highlightLockedUIElement)
+        if (self.highlightLockedUIElement)
         {
-            [[self highlightWindowController] setHighlightFrame:[UIElementUtilities frameOfUIElement:[self currentUIElement]] animate:NO];
-            [[self highlightWindowController] showWindow:nil];
+            [self.highlightWindowController setHighlightFrame:[UIElementUtilities
+                frameOfUIElement:[self currentUIElement]] animate:NO];
+            [self.highlightWindowController showWindow:nil];
         }
         else
         {
-            [[[self highlightWindowController] window] orderOut:nil];
+            [self.highlightWindowController.window orderOut:nil];
         }
     }
 }
