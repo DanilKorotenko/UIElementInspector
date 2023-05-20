@@ -25,16 +25,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		089C165DFE840E0CC02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		5305B7FD0B8A21D5000BC9BE /* AccessibilityInspector.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = AccessibilityInspector.icns; sourceTree = "<group>"; };
 		5311616D0B5EE645008CDA8F /* Info-UIElementInspector.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info-UIElementInspector.plist"; sourceTree = "<group>"; };
-		5381AB31119A1F0C0087326D /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/InspectorWindow.xib; sourceTree = "<group>"; };
-		5381AB3B119A1FE20087326D /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/InteractionWindow.xib; sourceTree = "<group>"; };
-		5381AB41119A20500087326D /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		5381AB52119A23250087326D /* InteractionWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InteractionWindowController.h; sourceTree = "<group>"; };
 		5381AB53119A23250087326D /* InteractionWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InteractionWindowController.m; sourceTree = "<group>"; };
 		5381AB58119A23490087326D /* InspectorWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InspectorWindowController.h; sourceTree = "<group>"; };
@@ -43,10 +39,14 @@
 		5381ACE6119A48330087326D /* UIElementUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIElementUtilities.m; sourceTree = "<group>"; };
 		5381ADD2119B53C30087326D /* DescriptionInspectorWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DescriptionInspectorWindowController.h; sourceTree = "<group>"; };
 		5381ADD3119B53C30087326D /* DescriptionInspectorWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DescriptionInspectorWindowController.m; sourceTree = "<group>"; };
-		5381ADD8119B54C70087326D /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/DescriptionInspectorWindow.xib; sourceTree = "<group>"; };
 		5381AFC8119B89830087326D /* HighlightWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HighlightWindowController.h; sourceTree = "<group>"; };
 		5381AFC9119B89830087326D /* HighlightWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HighlightWindowController.m; sourceTree = "<group>"; };
 		53C06DBF0B5FD78200FB5821 /* UIElementInspector.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UIElementInspector.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		DAD838652A18DB4F00BE05E3 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/DescriptionInspectorWindow.xib; sourceTree = "<group>"; };
+		DAD838662A18DB4F00BE05E3 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		DAD838672A18DB4F00BE05E3 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/InspectorWindow.xib; sourceTree = "<group>"; };
+		DAD838682A18DB4F00BE05E3 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/InteractionWindow.xib; sourceTree = "<group>"; };
+		DAD838692A18DB4F00BE05E3 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		F56389BC01F3B6B501CA1585 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		F56389BD01F3B6B501CA1585 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		F5656FB80209D1C201CA1586 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
@@ -188,7 +188,6 @@
 			knownRegions = (
 				en,
 				Base,
-				English,
 			);
 			mainGroup = 29B97314FDCFA39411CA2CEA /* AccessibilityTesting */;
 			projectDirPath = "";
@@ -236,7 +235,7 @@
 		089C165CFE840E0CC02AAC07 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				089C165DFE840E0CC02AAC07 /* English */,
+				DAD838662A18DB4F00BE05E3 /* en */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -244,7 +243,7 @@
 		5381AB30119A1F0C0087326D /* InspectorWindow.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				5381AB31119A1F0C0087326D /* English */,
+				DAD838672A18DB4F00BE05E3 /* en */,
 			);
 			name = InspectorWindow.xib;
 			sourceTree = "<group>";
@@ -252,7 +251,7 @@
 		5381AB3A119A1FE20087326D /* InteractionWindow.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				5381AB3B119A1FE20087326D /* English */,
+				DAD838682A18DB4F00BE05E3 /* en */,
 			);
 			name = InteractionWindow.xib;
 			sourceTree = "<group>";
@@ -260,7 +259,7 @@
 		5381AB40119A20500087326D /* MainMenu.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				5381AB41119A20500087326D /* English */,
+				DAD838692A18DB4F00BE05E3 /* en */,
 			);
 			name = MainMenu.xib;
 			sourceTree = "<group>";
@@ -268,7 +267,7 @@
 		5381ADDA119B54D20087326D /* DescriptionInspectorWindow.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				5381ADD8119B54C70087326D /* English */,
+				DAD838652A18DB4F00BE05E3 /* en */,
 			);
 			name = DescriptionInspectorWindow.xib;
 			sourceTree = "<group>";
@@ -284,9 +283,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = "Info-UIElementInspector.plist";
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
-				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = UIElementInspector;
-				SECTORDER_FLAGS = "";
 				WARNING_CFLAGS = (
 					"-Wmost",
 					"-Wno-four-char-constants",
@@ -304,9 +301,7 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				INFOPLIST_FILE = "Info-UIElementInspector.plist";
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
-				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = UIElementInspector;
-				SECTORDER_FLAGS = "";
 				WARNING_CFLAGS = (
 					"-Wmost",
 					"-Wno-four-char-constants",
@@ -320,12 +315,14 @@
 		53B057F30B5EE5E2000896CD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
 			};
 			name = Debug;
 		};
 		53B057F40B5EE5E2000896CD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
 			};
 			name = Release;
 		};

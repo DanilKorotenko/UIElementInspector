@@ -55,41 +55,48 @@ NSString *const UIElementUtilitiesNoDescription = @"No Description";
 
 #pragma mark -
 
-+ (pid_t)processIdentifierOfUIElement:(AXUIElementRef)element {
-    pid_t pid = 0;   
-    if (AXUIElementGetPid (element, &pid) == kAXErrorSuccess) {
-	return pid;
-    } else {
-	return 0;
++ (pid_t)processIdentifierOfUIElement:(AXUIElementRef)element
+{
+    pid_t pid = 0;
+    if (AXUIElementGetPid (element, &pid) == kAXErrorSuccess)
+    {
+        return pid;
+    }
+    else
+    {
+        return 0;
     }
 }
 
-+ (NSArray *)attributeNamesOfUIElement:(AXUIElementRef)element {
++ (NSArray *)attributeNamesOfUIElement:(AXUIElementRef)element
+{
     NSArray *attrNames = nil;
-    
+
     AXUIElementCopyAttributeNames(element, (CFArrayRef *)&attrNames);
-    
+
     return [attrNames autorelease];
 }
 
-+ (NSArray *)actionNamesOfUIElement:(AXUIElementRef)element {
++ (NSArray *)actionNamesOfUIElement:(AXUIElementRef)element
+{
     NSArray *actionNames = nil;
-    
+
     AXUIElementCopyActionNames(element, (CFArrayRef *)&actionNames);
-    
+
     return [actionNames autorelease];
 }
 
-
-+ (NSString *)descriptionOfAction:(NSString *)actionName ofUIElement:(AXUIElementRef)element {
++ (NSString *)descriptionOfAction:(NSString *)actionName ofUIElement:(AXUIElementRef)element
+{
     NSString *actionDescription = nil;
-    
+
     AXUIElementCopyActionDescription(element, (CFStringRef)actionName, (CFStringRef *)&actionDescription);
-    
+
     return [actionDescription autorelease];
 }
 
-+ (void)performAction:(NSString *)actionName ofUIElement:(AXUIElementRef)element {
++ (void)performAction:(NSString *)actionName ofUIElement:(AXUIElementRef)element
+{
     AXUIElementPerformAction( element, (CFStringRef)actionName);
 }
 
@@ -102,130 +109,156 @@ NSString *const UIElementUtilitiesNoDescription = @"No Description";
 {
     id result = nil;
     NSArray *attributeNames = [UIElementUtilities attributeNamesOfUIElement:element];
-    
-    if (attributeNames) {
+
+    if (attributeNames)
+    {
         if ( [attributeNames indexOfObject:(NSString *)attribute] != NSNotFound
                 &&
-        	AXUIElementCopyAttributeValue(element, (CFStringRef)attribute, (CFTypeRef *)&result) == kAXErrorSuccess
-        ) {
+            AXUIElementCopyAttributeValue(element, (CFStringRef)attribute, (CFTypeRef *)&result) == kAXErrorSuccess
+        )
+        {
             [result autorelease];
         }
     }
     return result;
 }
 
-+ (BOOL)canSetAttribute:(NSString *)attributeName ofUIElement:(AXUIElementRef)element {
++ (BOOL)canSetAttribute:(NSString *)attributeName ofUIElement:(AXUIElementRef)element
+{
     Boolean isSettable = false;
-    
+
     AXUIElementIsAttributeSettable(element, (CFStringRef)attributeName, &isSettable);
-        
+
     return (BOOL)isSettable;
 }
 
 + (void)setStringValue:(NSString *)stringValue forAttribute:(NSString *)attributeName ofUIElement:(AXUIElementRef)element;
 {
     CFTypeRef	theCurrentValue 	= NULL;
-        
+
     // First, found out what type of value it is.
     if ( attributeName
         && AXUIElementCopyAttributeValue( element, (CFStringRef)attributeName, &theCurrentValue ) == kAXErrorSuccess
-        && theCurrentValue) {
-    
+        && theCurrentValue)
+    {
         CFTypeRef	valueRef = NULL;
 
         // Set the value using based on the type
-        if (AXValueGetType(theCurrentValue) == kAXValueCGPointType) {		// CGPoint
-	    float x, y;
+        if (AXValueGetType(theCurrentValue) == kAXValueCGPointType)
+        {
+            // CGPoint
+            float x, y;
             sscanf( [stringValue UTF8String], "x=%g y=%g", &x, &y );
-	    CGPoint point = CGPointMake(x, y);
+            CGPoint point = CGPointMake(x, y);
             valueRef = AXValueCreate( kAXValueCGPointType, (const void *)&point );
-            if (valueRef) {
+            if (valueRef)
+            {
                 AXUIElementSetAttributeValue( element, (CFStringRef)attributeName, valueRef );
                 CFRelease( valueRef );
             }
         }
-     	else if (AXValueGetType(theCurrentValue) == kAXValueCGSizeType) {	// CGSize
-	    float w, h;
+        else if (AXValueGetType(theCurrentValue) == kAXValueCGSizeType)
+        {
+            // CGSize
+            float w, h;
             sscanf( [stringValue UTF8String], "w=%g h=%g", &w, &h );
             CGSize size = CGSizeMake(w, h);
             valueRef = AXValueCreate( kAXValueCGSizeType, (const void *)&size );
-            if (valueRef) {
+            if (valueRef)
+            {
                 AXUIElementSetAttributeValue( element, (CFStringRef)attributeName, valueRef );
                 CFRelease( valueRef );
             }
         }
-     	else if (AXValueGetType(theCurrentValue) == kAXValueCGRectType) {	// CGRect
-	    float x, y, w, h;
+        else if (AXValueGetType(theCurrentValue) == kAXValueCGRectType)
+        {
+            // CGRect
+            float x, y, w, h;
             sscanf( [stringValue UTF8String], "x=%g y=%g w=%g h=%g", &x, &y, &w, &h );
-	    CGRect rect = CGRectMake(x, y, w, h);
+            CGRect rect = CGRectMake(x, y, w, h);
             valueRef = AXValueCreate( kAXValueCGRectType, (const void *)&rect );
-            if (valueRef) {
+            if (valueRef)
+            {
                 AXUIElementSetAttributeValue( element, (CFStringRef)attributeName, valueRef );
                 CFRelease( valueRef );
             }
         }
-     	else if (AXValueGetType(theCurrentValue) == kAXValueCFRangeType) {	// CFRange
+        else if (AXValueGetType(theCurrentValue) == kAXValueCFRangeType)
+        {
+            // CFRange
             CFRange range;
             sscanf( [stringValue UTF8String], "pos=%ld len=%ld", &(range.location), &(range.length) );
             valueRef = AXValueCreate( kAXValueCFRangeType, (const void *)&range );
-            if (valueRef) {
+            if (valueRef)
+            {
                 AXUIElementSetAttributeValue( element, (CFStringRef)attributeName, valueRef );
                 CFRelease( valueRef );
             }
         }
-        else if ([(id)theCurrentValue isKindOfClass:[NSString class]]) {	// NSString
+        else if ([(id)theCurrentValue isKindOfClass:[NSString class]])
+        {
+            // NSString
             AXUIElementSetAttributeValue( element, (CFStringRef)attributeName, stringValue );
         }
-        else if ([(id)theCurrentValue isKindOfClass:[NSValue class]]) {		// NSValue
+        else if ([(id)theCurrentValue isKindOfClass:[NSValue class]])
+        {
+            // NSValue
             AXUIElementSetAttributeValue( element, (CFStringRef)attributeName, [NSNumber numberWithFloat:[stringValue floatValue]] );
         }
     }
 }
 
 
-+ (AXUIElementRef)parentOfUIElement:(AXUIElementRef)element {
-        return (AXUIElementRef)[UIElementUtilities valueOfAttribute:NSAccessibilityParentAttribute ofUIElement:element];
++ (AXUIElementRef)parentOfUIElement:(AXUIElementRef)element
+{
+    return (AXUIElementRef)[UIElementUtilities valueOfAttribute:NSAccessibilityParentAttribute ofUIElement:element];
 }
 
-+ (NSString *)roleOfUIElement:(AXUIElementRef)element {
-        return (NSString *)[UIElementUtilities valueOfAttribute:NSAccessibilityRoleAttribute ofUIElement:element];
++ (NSString *)roleOfUIElement:(AXUIElementRef)element
+{
+    return (NSString *)[UIElementUtilities valueOfAttribute:NSAccessibilityRoleAttribute ofUIElement:element];
 }
 
-+ (NSString *)titleOfUIElement:(AXUIElementRef)element {
-        return (NSString *)[UIElementUtilities valueOfAttribute:NSAccessibilityTitleAttribute ofUIElement:element];
++ (NSString *)titleOfUIElement:(AXUIElementRef)element
+{
+    return (NSString *)[UIElementUtilities valueOfAttribute:NSAccessibilityTitleAttribute ofUIElement:element];
 }
 
-+ (BOOL)isApplicationUIElement:(AXUIElementRef)element {
++ (BOOL)isApplicationUIElement:(AXUIElementRef)element
+{
     return [[UIElementUtilities roleOfUIElement:element] isEqualToString:NSAccessibilityApplicationRole];
 }
-
-
 
 #pragma mark -
 
 // Flip coordinates
 
-+ (CGPoint)carbonScreenPointFromCocoaScreenPoint:(NSPoint)cocoaPoint {
++ (CGPoint)carbonScreenPointFromCocoaScreenPoint:(NSPoint)cocoaPoint
+{
     NSScreen *foundScreen = nil;
     CGPoint thePoint;
-    
-    for (NSScreen *screen in [NSScreen screens]) {
-	if (NSPointInRect(cocoaPoint, [screen frame])) {
-	    foundScreen = screen;
-	}
+
+    for (NSScreen *screen in [NSScreen screens])
+    {
+        if (NSPointInRect(cocoaPoint, [screen frame]))
+        {
+            foundScreen = screen;
+        }
     }
 
-    if (foundScreen) {
-	CGFloat screenHeight = [foundScreen frame].size.height;
-	
-	thePoint = CGPointMake(cocoaPoint.x, screenHeight - cocoaPoint.y - 1);
-    } else {
-	thePoint = CGPointMake(0.0, 0.0);
+    if (foundScreen)
+    {
+        CGFloat screenHeight = [foundScreen frame].size.height;
+
+        thePoint = CGPointMake(cocoaPoint.x, screenHeight - cocoaPoint.y - 1);
+    }
+    else
+    {
+        thePoint = CGPointMake(0.0, 0.0);
     }
 
     return thePoint;
 }
-
 
 // -------------------------------------------------------------------------------
 //	FlippedScreenBounds:bounds
@@ -237,26 +270,25 @@ NSString *const UIElementUtilitiesNoDescription = @"No Description";
     return bounds;
 }
 
-
-+ (NSRect)frameOfUIElement:(AXUIElementRef)element {
-
++ (NSRect)frameOfUIElement:(AXUIElementRef)element
+{
     NSRect bounds = NSZeroRect;
-    
+
     id elementPosition = [UIElementUtilities valueOfAttribute:NSAccessibilityPositionAttribute ofUIElement:element];
     id elementSize = [UIElementUtilities valueOfAttribute:NSAccessibilitySizeAttribute ofUIElement:element];
-    
-    if (elementPosition && elementSize) {
-		NSRect topLeftWindowRect;
-		AXValueGetValue((AXValueRef)elementPosition, kAXValueCGPointType, &topLeftWindowRect.origin);
-		AXValueGetValue((AXValueRef)elementSize, kAXValueCGSizeType, &topLeftWindowRect.size);
-		bounds = [self flippedScreenBounds:topLeftWindowRect];
+
+    if (elementPosition && elementSize)
+    {
+        NSRect topLeftWindowRect;
+        AXValueGetValue((AXValueRef)elementPosition, kAXValueCGPointType, &topLeftWindowRect.origin);
+        AXValueGetValue((AXValueRef)elementSize, kAXValueCGSizeType, &topLeftWindowRect.size);
+        bounds = [self flippedScreenBounds:topLeftWindowRect];
     }
     return bounds;
 }
 
 #pragma mark -
 #pragma mark String Descriptions
-
 
 // -------------------------------------------------------------------------------
 //	stringDescriptionOfAXValue:valueRef:beVerbose
@@ -266,45 +298,70 @@ NSString *const UIElementUtilitiesNoDescription = @"No Description";
 + (NSString *)stringDescriptionOfAXValue:(CFTypeRef)valueRef beingVerbose:(BOOL)beVerbose
 {
     NSString *result = @"AXValue???";
-    
-    switch (AXValueGetType(valueRef)) {
-        case kAXValueCGPointType: {
+
+    switch (AXValueGetType(valueRef))
+    {
+        case kAXValueCGPointType:
+        {
             CGPoint point;
-            if (AXValueGetValue(valueRef, kAXValueCGPointType, &point)) {
+            if (AXValueGetValue(valueRef, kAXValueCGPointType, &point))
+            {
                 if (beVerbose)
+                {
                     result = [NSString stringWithFormat:@"<AXPointValue x=%g y=%g>", point.x, point.y];
+                }
                 else
+                {
                     result = [NSString stringWithFormat:@"x=%g y=%g", point.x, point.y];
+                }
             }
             break;
         }
-        case kAXValueCGSizeType: {
+        case kAXValueCGSizeType:
+        {
             CGSize size;
-            if (AXValueGetValue(valueRef, kAXValueCGSizeType, &size)) {
+            if (AXValueGetValue(valueRef, kAXValueCGSizeType, &size))
+            {
                 if (beVerbose)
+                {
                     result = [NSString stringWithFormat:@"<AXSizeValue w=%g h=%g>", size.width, size.height];
+                }
                 else
+                {
                     result = [NSString stringWithFormat:@"w=%g h=%g", size.width, size.height];
+                }
             }
             break;
         }
-        case kAXValueCGRectType: {
+        case kAXValueCGRectType:
+        {
             CGRect rect;
-            if (AXValueGetValue(valueRef, kAXValueCGRectType, &rect)) {
+            if (AXValueGetValue(valueRef, kAXValueCGRectType, &rect))
+            {
                 if (beVerbose)
+                {
                     result = [NSString stringWithFormat:@"<AXRectValue  x=%g y=%g w=%g h=%g>", rect.origin.x, rect.origin.y, rect.size.width, rect.size.height];
+                }
                 else
+                {
                     result = [NSString stringWithFormat:@"x=%g y=%g w=%g h=%g", rect.origin.x, rect.origin.y, rect.size.width, rect.size.height];
+                }
             }
             break;
         }
-        case kAXValueCFRangeType: {
+        case kAXValueCFRangeType:
+        {
             CFRange range;
-            if (AXValueGetValue(valueRef, kAXValueCFRangeType, &range)) {
+            if (AXValueGetValue(valueRef, kAXValueCFRangeType, &range))
+            {
                 if (beVerbose)
+                {
                     result = [NSString stringWithFormat:@"<AXRangeValue pos=%ld len=%ld>", range.location, range.length];
+                }
                 else
+                {
                     result = [NSString stringWithFormat:@"pos=%ld len=%ld", range.location, range.length];
+                }
             }
             break;
         }
@@ -313,8 +370,6 @@ NSString *const UIElementUtilitiesNoDescription = @"No Description";
     }
     return result;
 }
-
-
 
 // -------------------------------------------------------------------------------
 //	descriptionOfValue:theValue:beVerbose
@@ -326,55 +381,64 @@ NSString *const UIElementUtilitiesNoDescription = @"No Description";
 {
     NSString *	theValueDescString	= NULL;
 
-    if (theValue) {
-    
-        if (AXValueGetType(theValue) != kAXValueIllegalType) {
+    if (theValue)
+    {
+        if (AXValueGetType(theValue) != kAXValueIllegalType)
+        {
             theValueDescString = [self stringDescriptionOfAXValue:theValue beingVerbose:beVerbose];
         }
-        else if (CFGetTypeID(theValue) == CFArrayGetTypeID()) {
+        else if (CFGetTypeID(theValue) == CFArrayGetTypeID())
+        {
             theValueDescString = [NSString stringWithFormat:@"<array of size %lu>", (unsigned long)[(NSArray *)theValue count]];
         }
-        else if (CFGetTypeID(theValue) == AXUIElementGetTypeID()) {
-            
+        else if (CFGetTypeID(theValue) == AXUIElementGetTypeID())
+        {
             NSString *	uiElementRole  	= NULL;
-        
-            if (AXUIElementCopyAttributeValue( (AXUIElementRef)theValue, kAXRoleAttribute, (CFTypeRef *)&uiElementRole ) == kAXErrorSuccess) {
+
+            if (AXUIElementCopyAttributeValue( (AXUIElementRef)theValue, kAXRoleAttribute, (CFTypeRef *)&uiElementRole ) == kAXErrorSuccess)
+            {
                 NSString *	uiElementTitle  = NULL;
-                
+
                 uiElementTitle = [self valueOfAttribute:NSAccessibilityTitleAttribute ofUIElement:(AXUIElementRef)theValue];
-                
+
                 #if 0
                 // hack to work around cocoa app objects not having titles yet
-                if (uiElementTitle == nil && [uiElementRole isEqualToString:(NSString *)kAXApplicationRole]) {
+                if (uiElementTitle == nil && [uiElementRole isEqualToString:(NSString *)kAXApplicationRole])
+                {
                     pid_t				theAppPID = 0;
                     ProcessSerialNumber	theAppPSN = {0,0};
                     NSString *			theAppName = NULL;
                     
                     if (AXUIElementGetPid( (AXUIElementRef)theValue, &theAppPID ) == kAXErrorSuccess
                         && GetProcessForPID( theAppPID, &theAppPSN ) == noErr
-                        && CopyProcessName( &theAppPSN, (CFStringRef *)&theAppName ) == noErr ) {
+                        && CopyProcessName( &theAppPSN, (CFStringRef *)&theAppName ) == noErr )
+                    {
                         uiElementTitle = theAppName;
                     }
                 }
                 #endif
 
-                if (uiElementTitle != nil) {
+                if (uiElementTitle != nil)
+                {
                     theValueDescString = [NSString stringWithFormat:@"<%@: “%@”>", uiElementRole, uiElementTitle];
                 }
-                else {
+                else
+                {
                     theValueDescString = [NSString stringWithFormat:@"<%@>", uiElementRole];
                 }
                 [uiElementRole release];
             }
-            else {
+            else
+            {
                 theValueDescString = [(id)theValue description];
             }
         }
-        else {
+        else
+        {
             theValueDescString = [(id)theValue description];
         }
     }
-    
+
     return theValueDescString;
 }
 
@@ -389,7 +453,8 @@ NSString *const UIElementUtilitiesNoDescription = @"No Description";
     NSString *elementDescr = [self descriptionOfValue:element beingVerbose:NO];
     AXUIElementRef parent = (AXUIElementRef)[self valueOfAttribute:NSAccessibilityParentAttribute ofUIElement:element];
 
-    if (parent != NULL) {
+    if (parent != NULL)
+    {
         lineage = [self lineageOfUIElement:parent];
     }
     return [lineage arrayByAddingObject:elementDescr];
@@ -407,7 +472,8 @@ NSString *const UIElementUtilitiesNoDescription = @"No Description";
     NSArray *lineage = [self lineageOfUIElement:element];
     NSString *ancestor;
     NSEnumerator *e = [lineage objectEnumerator];
-    while (ancestor = [e nextObject]) {
+    while (ancestor = [e nextObject])
+    {
         [result appendFormat:@"%@%@\n", indent, ancestor];
         [indent appendString:@" "];
     }
@@ -430,62 +496,64 @@ NSString *const UIElementUtilitiesNoDescription = @"No Description";
     
     // display attributes
     theNames = [UIElementUtilities attributeNamesOfUIElement:element];
-    if (theNames) {
-    
+    if (theNames)
+    {
         numOfNames = [theNames count];
-        
-        if (numOfNames)
-            [theDescriptionStr appendString:@"\nAttributes:\n"];
 
-        for( nameIndex = 0; nameIndex < numOfNames; nameIndex++ ) {
-            
+        if (numOfNames)
+        {
+            [theDescriptionStr appendString:@"\nAttributes:\n"];
+        }
+
+        for( nameIndex = 0; nameIndex < numOfNames; nameIndex++ )
+        {
             NSString *	theName = NULL;
             id		theValue = NULL;
             Boolean	theSettableFlag = false;
-            
+
             // Grab name
             theName = [theNames objectAtIndex:nameIndex];
-                
+
             // Grab settable field
-          	AXUIElementIsAttributeSettable( element, (CFStringRef)theName, &theSettableFlag );
-            
-            // Add string        
+            AXUIElementIsAttributeSettable( element, (CFStringRef)theName, &theSettableFlag );
+
+            // Add string
             [theDescriptionStr appendFormat:@"   %@%@:  “%@”\n", theName, (theSettableFlag?@" (W)":@""), [self descriptionForUIElement:element attribute:theName beingVerbose:false]];
-        
+
             [theValue release];
         }
-    
+
     }
-    
+
     // display actions
     theNames = [UIElementUtilities actionNamesOfUIElement:element];
-    if (theNames) {
-    
+    if (theNames)
+    {
         numOfNames = [theNames count];
-        
-        if (numOfNames)
-            [theDescriptionStr appendString:@"\nActions:\n"];
 
-        for( nameIndex = 0; nameIndex < numOfNames; nameIndex++ ) {
-            
+        if (numOfNames)
+        {
+            [theDescriptionStr appendString:@"\nActions:\n"];
+        }
+
+        for( nameIndex = 0; nameIndex < numOfNames; nameIndex++ )
+        {
             NSString *	theName 		= NULL;
-           	NSString *	theDesc 		= NULL;
-            
+            NSString *	theDesc 		= NULL;
+
             // Grab name
             theName = [theNames objectAtIndex:nameIndex];
-            
+
             // Grab description
-		theDesc = [self descriptionOfAction:theName ofUIElement:element];
-            
-            // Add string        
+            theDesc = [self descriptionOfAction:theName ofUIElement:element];
+
+            // Add string
             [theDescriptionStr appendFormat:@"   %@ - %@\n", theName, theDesc];
         }
-    
     }
-    
+
     return theDescriptionStr;
 }
-
 
 // -------------------------------------------------------------------------------
 //	descriptionForUIElement:uiElement:beingVerbose
@@ -497,30 +565,28 @@ NSString *const UIElementUtilitiesNoDescription = @"No Description";
     NSString *	theValueDescString	= NULL;
     CFTypeRef	theValue;
     CFIndex	count;
-    if (([name isEqualToString:NSAccessibilityChildrenAttribute]
-            ||
-         [name isEqualToString:NSAccessibilityRowsAttribute]
-        )
-            &&
-        AXUIElementGetAttributeValueCount(uiElement, (CFStringRef)name, &count) == kAXErrorSuccess) {
+    if (([name isEqualToString:NSAccessibilityChildrenAttribute] ||
+            [name isEqualToString:NSAccessibilityRowsAttribute])
+        &&
+            AXUIElementGetAttributeValueCount(uiElement, (CFStringRef)name, &count) == kAXErrorSuccess)
+    {
         // No need to get the value of large arrays - we just display their size.
-		// We don't want to do this with every attribute because AXUIElementGetAttributeValueCount on non-array valued
-		// attributes will cause debug spewage.
+        // We don't want to do this with every attribute because AXUIElementGetAttributeValueCount on non-array valued
+        // attributes will cause debug spewage.
         theValueDescString = [NSString stringWithFormat:@"<array of size %ld>", (long)count];
-    } else if (AXUIElementCopyAttributeValue ( uiElement, (CFStringRef)name, &theValue ) == kAXErrorSuccess && theValue) {
+    }
+    else if (AXUIElementCopyAttributeValue ( uiElement, (CFStringRef)name, &theValue ) == kAXErrorSuccess && theValue)
+    {
         theValueDescString = [self descriptionOfValue:theValue beingVerbose:beVerbose];
     }
     return theValueDescString;
 }
 
 // This method returns a 'no description' string by default
-+ (NSString *)descriptionOfAXDescriptionOfUIElement:(AXUIElementRef)element {
++ (NSString *)descriptionOfAXDescriptionOfUIElement:(AXUIElementRef)element
+{
     id result = [self valueOfAttribute:NSAccessibilityDescriptionAttribute ofUIElement:element];
     return (!result || [result isEqualToString:@""]) ? UIElementUtilitiesNoDescription: [result description];
 }
-
-
-
-
 
 @end
