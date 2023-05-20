@@ -81,11 +81,17 @@ EventHotKeyRef	gMyHotKeyRef;
 // -------------------------------------------------------------------------------
 OSStatus LockUIElementHotKeyHandler(EventHandlerCallRef nextHandler,EventRef theEvent, void *userData)
 {
-    AppDelegate *appController = (AppDelegate *)userData;
+    AppDelegate *appController = (__bridge AppDelegate *)userData;
     if ([appController isInteractionWindowVisible])
-		[NSTimer scheduledTimerWithTimeInterval:0.1 target:appController selector:@selector(unlockCurrentUIElement:) userInfo:nil repeats:NO];
+    {
+        [NSTimer scheduledTimerWithTimeInterval:0.1 target:appController selector:@selector(unlockCurrentUIElement:)
+            userInfo:nil repeats:NO];
+    }
     else
-		[NSTimer scheduledTimerWithTimeInterval:0.1 target:appController selector:@selector(lockCurrentUIElement:) userInfo:nil repeats:NO];
+    {
+        [NSTimer scheduledTimerWithTimeInterval:0.1 target:appController selector:@selector(lockCurrentUIElement:)
+            userInfo:nil repeats:NO];
+    }
     return noErr;
 }
 
@@ -110,13 +116,15 @@ static OSStatus RegisterLockUIElementHotKey(void *userInfo)
 
 - (void)dealloc
 {
-    [_inspectorWindowController release];
-    [_interactionWindowController release];
-    [_descriptionInspectorWindowController release];
-    [_highlightWindowController release];
-    if (_systemWideElement) CFRelease(_systemWideElement);
-    if (_currentUIElement) CFRelease(_currentUIElement);
-    [super dealloc];
+    if (_systemWideElement)
+    {
+        CFRelease(_systemWideElement);
+    }
+
+    if (_currentUIElement)
+    {
+        CFRelease(_currentUIElement);
+    }
 }
 
 - (HighlightWindowController *)highlightWindowController
@@ -133,7 +141,7 @@ static OSStatus RegisterLockUIElementHotKey(void *userInfo)
     // We first have to check if the Accessibility APIs are turned on.  If not, we have to tell the user to do it (they'll need to authenticate to do it).  If you are an accessibility app (i.e., if you are getting info about UI elements in other apps), the APIs won't work unless the APIs are turned on.
     if (!AXAPIEnabled())
     {
-        NSAlert *alert = [[[NSAlert alloc] init] autorelease];
+        NSAlert *alert = [[NSAlert alloc] init];
 
         [alert setAlertStyle:NSWarningAlertStyle];
         [alert setMessageText:@"UI Element Inspector requires that the Accessibility API be enabled."];
@@ -173,7 +181,7 @@ static OSStatus RegisterLockUIElementHotKey(void *userInfo)
     _systemWideElement = AXUIElementCreateSystemWide();
 
     // Pass self in for userInfo, gives us a pointer to ourselves in handler function
-    RegisterLockUIElementHotKey((void *)self);
+    RegisterLockUIElementHotKey((__bridge void *)self);
 
 #if USE_DESCRIPTION_INSPECTOR
     _descriptionInspectorWindowController = [[DescriptionInspectorWindowController alloc] initWithWindowNibName:@"DescriptionInspectorWindow"];
@@ -198,8 +206,7 @@ static OSStatus RegisterLockUIElementHotKey(void *userInfo)
 // -------------------------------------------------------------------------------
 - (void)setCurrentUIElement:(AXUIElementRef)uiElement
 {
-    [(id)_currentUIElement autorelease];
-    _currentUIElement = (AXUIElementRef)[(id)uiElement retain];
+    _currentUIElement = (__bridge AXUIElementRef)(__bridge id)uiElement;
 }
 
 // -------------------------------------------------------------------------------
@@ -313,7 +320,6 @@ static OSStatus RegisterLockUIElementHotKey(void *userInfo)
     [_inspectorWindowController indicateUIElementIsLocked:NO];
     [_interactionWindowController close];
     [[self highlightWindowController] close];
-    [_highlightWindowController release];
     _highlightWindowController = nil;
 }
 
@@ -326,7 +332,7 @@ static OSStatus RegisterLockUIElementHotKey(void *userInfo)
 {
     if (_currentlyInteracting)
     {
-        AXUIElementRef element = (AXUIElementRef)[sender representedObject];
+        AXUIElementRef element = (__bridge AXUIElementRef)[sender representedObject];
         BOOL flag = ![UIElementUtilities isApplicationUIElement:element];
         flag = flag && ![UIElementUtilities isApplicationUIElement:[self currentUIElement]];
         [self setCurrentUIElement:element];

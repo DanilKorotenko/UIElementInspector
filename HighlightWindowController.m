@@ -68,8 +68,6 @@
         [window setDelegate:self];
     }
 
-    [window release];
-
     return self;
 }
 

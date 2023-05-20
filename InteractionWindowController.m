@@ -129,7 +129,6 @@
                         }
                         [_elementsPopup addItemWithTitle:attributeName];
                         [[_elementsPopup lastItem] setSubmenu:menu];
-                        [menu release];
                     }
                 }
             }
@@ -204,23 +203,21 @@
 // -------------------------------------------------------------------------------
 - (IBAction)attributeSelected:(id)sender
 {
-    NSString *attributeName = nil;
-    NSArray *theNames = nil;
-    Boolean theSettableFlag = false;
-
     AXUIElementRef element = [(id)[NSApp delegate] currentUIElement];
 
     // Set text field with value
-    attributeName = [[_attributesPopup selectedItem] representedObject];
-    [_attributeValueTextField setStringValue:[UIElementUtilities descriptionForUIElement:element attribute:attributeName beingVerbose:false]];
+    NSString *attributeName = [[_attributesPopup selectedItem] representedObject];
+    [_attributeValueTextField setStringValue:[UIElementUtilities descriptionForUIElement:element
+            attribute:attributeName beingVerbose:false]];
 
     // Update text fields and button based on settable flag
+    Boolean theSettableFlag = false;
     AXUIElementIsAttributeSettable( element, (CFStringRef)attributeName, &theSettableFlag );
+
+    BOOL settableFlag = theSettableFlag ? YES : NO;
     [_attributeValueTextField setEnabled:theSettableFlag];
     [_attributeValueTextField setEditable:theSettableFlag];
     [_setAttributeButton setEnabled:theSettableFlag];
-
-    [theNames release];
 }
 
 // -------------------------------------------------------------------------------
