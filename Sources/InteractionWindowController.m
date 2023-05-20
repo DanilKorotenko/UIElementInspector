@@ -215,9 +215,9 @@
     AXUIElementIsAttributeSettable( element, (CFStringRef)attributeName, &theSettableFlag );
 
     BOOL settableFlag = theSettableFlag ? YES : NO;
-    [_attributeValueTextField setEnabled:theSettableFlag];
-    [_attributeValueTextField setEditable:theSettableFlag];
-    [_setAttributeButton setEnabled:theSettableFlag];
+    [_attributeValueTextField setEnabled:settableFlag];
+    [_attributeValueTextField setEditable:settableFlag];
+    [_setAttributeButton setEnabled:settableFlag];
 }
 
 // -------------------------------------------------------------------------------

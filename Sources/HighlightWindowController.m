@@ -54,7 +54,8 @@
 {
     NSRect bounds = NSMakeRect(0.0, 0.0, 100.0, 100.0);
 
-    NSWindow *window = [[NSWindow alloc] initWithContentRect:bounds styleMask:NSBorderlessWindowMask backing:NSBackingStoreBuffered defer:YES];
+    NSWindow *window = [[NSWindow alloc] initWithContentRect:bounds styleMask:NSWindowStyleMaskBorderless
+        backing:NSBackingStoreBuffered defer:YES];
     [window setOpaque:NO];
     [window setAlphaValue:0.20];
     [window setLevel:NSStatusWindowLevel];

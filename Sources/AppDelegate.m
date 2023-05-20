@@ -114,11 +114,12 @@
 - (void)applicationDidFinishLaunching:(NSNotification *)note
 {
     // We first have to check if the Accessibility APIs are turned on.  If not, we have to tell the user to do it (they'll need to authenticate to do it).  If you are an accessibility app (i.e., if you are getting info about UI elements in other apps), the APIs won't work unless the APIs are turned on.
-    if (!AXAPIEnabled())
+
+    if (!AXIsProcessTrusted())
     {
         NSAlert *alert = [[NSAlert alloc] init];
 
-        [alert setAlertStyle:NSWarningAlertStyle];
+        [alert setAlertStyle:NSAlertStyleWarning];
         [alert setMessageText:@"UI Element Inspector requires that the Accessibility API be enabled."];
         [alert setInformativeText:@"Would you like to launch System Preferences so that you can turn on \"Enable access for assistive devices\"?"];
         [alert addButtonWithTitle:@"Open System Preferences"];
